@@ -70,6 +70,8 @@ Open **http://127.0.0.1:8787** in a browser on the **same computer**. This is a 
 4. Try to recall the answer before expanding **Reveal answer**. Mark each card **Got it** or **Practice again**.
 5. Export the cards and review marks as Markdown. Refreshing the page clears the study session; notes are not saved automatically.
 
+Your CMD/terminal shows short activity messages: loading the model, model ready, thinking/generating, and the number of cards created with elapsed time. Stop requests and failed AI tasks also get a brief message. These messages work with both backends; routine browser status checks stay quiet. Notes, generated card text, and model reasoning are not printed. "Thinking" is a generation status, not a transcript of the model's reasoning.
+
 The prompt asks the model to copy answer sentences from the notes, reducing unsupported rewording. This is not a semantic accuracy guarantee. The small model may still produce unsupported answers or malformed output. The app rejects incomplete card sets instead of manufacturing a result. Check generated answers against the notes. CPU generation may take a minute or more; generation is cancelled after three minutes. The Stop button appears only while inference is active, not during model download.
 
 ## SDK and model

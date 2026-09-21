@@ -41,7 +41,10 @@ export function createApp() {
       let input;
       try { input = JSON.parse(Buffer.concat(chunks).toString('utf8')); }
       catch { return json(400, {error: 'Invalid JSON.'}); }
-      if (req.url === '/api/stop') { await stopGeneration(); return json(200, {stopped: true}); }
+      if (req.url === '/api/stop') {
+        if (getStatus().generating) console.log('[Pocket Recall] Stop requested.');
+        await stopGeneration(); return json(200, {stopped: true});
+      }
       if (busy) return json(409, {error: 'A local task is already running. Please wait.'});
       let validated;
       if (req.url === '/api/generate') {
@@ -50,8 +53,18 @@ export function createApp() {
       }
       busy = true;
       try {
-        if (req.url === '/api/prepare') { await prepareModel(); return json(200, getStatus()); }
-        return json(200, await generateCards(validated.notes, validated.count));
+        const needsModel = getStatus().phase !== 'ready';
+        if (needsModel) console.log('[Pocket Recall] Loading local AI model... First use may download it.');
+        await prepareModel();
+        if (needsModel) console.log('[Pocket Recall] Model ready.');
+        if (req.url === '/api/prepare') return json(200, getStatus());
+        console.log(`[Pocket Recall] Thinking... generating ${validated.count} flashcards locally.`);
+        const result = await generateCards(validated.notes, validated.count);
+        console.log(`[Pocket Recall] Done: ${result.cards.length} flashcards in ${result.seconds}s.`);
+        return json(200, result);
+      } catch (error) {
+        console.error('[Pocket Recall] AI task could not finish. Check the app for details.');
+        throw error;
       } finally { busy = false; }
     } catch (error) { json(500, {error: error.message || 'The local model could not run.'}); }
   });
