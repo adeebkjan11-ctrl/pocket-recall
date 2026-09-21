@@ -30,7 +30,8 @@ export function createApp() {
       if (req.method !== 'POST' || !['/api/prepare', '/api/generate', '/api/stop'].includes(req.url)) return json(404, {error: 'Not found.'});
       const supplied = Buffer.from(req.headers['x-session-token'] ?? '');
       if (supplied.length !== token.length || !timingSafeEqual(supplied, Buffer.from(token))) return json(403, {error: 'Refresh this page to reconnect.'});
-      if (req.headers['content-type'] !== 'application/json') return json(415, {error: 'Expected JSON.'});
+      const mediaType = req.headers['content-type']?.split(';',1)[0].trim().toLowerCase();
+      if (mediaType !== 'application/json') return json(415, {error: 'Expected JSON.'});
       const chunks = []; let size = 0;
       for await (const chunk of req) {
         size += chunk.length;

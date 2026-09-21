@@ -43,3 +43,23 @@ test('local HTTP boundary blocks hostile origins, missing tokens and invalid inp
   assert.equal((await fetch(base+'/api/generate',{method:'POST',headers,body:JSON.stringify({notes:'a'.repeat(17000)})})).status,413);
   assert.equal((await fetch(base+'/api/status')).status,200);
 });
+test('JSON API accepts media type parameters and rejects non-JSON types', async t => {
+  const server = createApp(); server.listen(0,'127.0.0.1'); await once(server,'listening');
+  t.after(() => new Promise(resolve => {server.close(resolve); server.closeAllConnections();}));
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const {token} = await (await fetch(base+'/api/session')).json();
+  for (const type of ['application/json', 'application/json; charset=utf-8', 'Application/JSON; Charset=UTF-8']) {
+    const response = await fetch(base+'/api/stop',{
+      method:'POST',headers:{'Content-Type':type,'X-Session-Token':token},body:'{}'
+    });
+    assert.equal(response.status,200,type);
+    assert.deepEqual(await response.json(),{stopped:true});
+  }
+  for (const type of ['text/plain', 'application/jsonp', 'application/json-invalid']) {
+    const response = await fetch(base+'/api/stop',{
+      method:'POST',headers:{'Content-Type':type,'X-Session-Token':token},body:'{}'
+    });
+    assert.equal(response.status,415,type);
+    await response.json();
+  }
+});
