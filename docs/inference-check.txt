@@ -1,0 +1,22 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> pocket-recall-qvac@1.0.0 smoke
+> node scripts/smoke.js
+
+Error: listen EPERM: operation not permitted /tmp/qvac-worker-18-mub3rckp-959a.sock
+    at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+    at listenInCluster (node:net:2224:12)
+    at Server.listen (node:net:2361:5)
+    at file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/rpc/node-rpc-client.js:352:19
+    at new Promise (<anonymous>)
+    at ensureRPC (file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/rpc/node-rpc-client.js:324:18)
+    at async getRPCInstance (file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/rpc/rpc-client.js:180:17)
+    at async prepareRPCContext (file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/rpc/rpc-client.js:199:39)
+    at async stream (file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/rpc/rpc-client.js:281:17)
+    at async runLoadModel (file:///workspace/scratch/9d2febf2cbf4/pocket-recall/node_modules/@qvac/sdk/dist/src/client/api/load-model.js:87:26) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/tmp/qvac-worker-18-mub3rckp-959a.sock',
+  port: -1
+}
