@@ -14,6 +14,16 @@ test('model output validation accepts wrapped JSON and rejects incomplete cards'
   assert.deepEqual(parseCards('<think>ignored</think>\n```json\n'+JSON.stringify(cards)+'\n```',3),cards);
   for (const value of ['nonsense','[]','[{}]',JSON.stringify(cards.slice(0,2)),JSON.stringify([...cards.slice(0,2),{question:'?',answer:''}])]) assert.throws(() => parseCards(value,3));
 });
+test('model output preserves literal thinking tags inside card text', () => {
+  const cards = [
+    {question:'What encloses the reasoning?',answer:'<think>reasoning</think> encloses the reasoning.'},
+    {question:'What opens the block?',answer:'The opening tag is <think>.'},
+    {question:'What closes the block?',answer:'The closing tag is </think>.'}
+  ];
+  assert.deepEqual(parseCards(JSON.stringify(cards),3),cards);
+  const wrapped = '<think>Draft [discarded]</think>\n<think>Check again.</think>\n```json\n' + JSON.stringify(cards) + '\n```';
+  assert.deepEqual(parseCards(wrapped,3),cards);
+});
 test('local HTTP boundary blocks hostile origins, missing tokens and invalid input', async t => {
   const server = createApp(); server.listen(0,'127.0.0.1'); await once(server,'listening');
   t.after(() => new Promise(resolve => {server.close(resolve); server.closeAllConnections();}));
