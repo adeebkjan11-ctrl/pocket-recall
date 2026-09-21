@@ -1,0 +1,59 @@
+{
+  "sourceNotes": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API lets software systems communicate through defined requests and responses. AJAX lets a web page exchange data with a server without reloading the entire page.",
+  "runs": [
+    {
+      "requestedCards": 3,
+      "status": 200,
+      "cards": [
+        {
+          "question": "What is an API?",
+          "answer": "An API is a protocol used to let software systems communicate through defined requests and responses."
+        },
+        {
+          "question": "What is AJAX?",
+          "answer": "AJAX lets a web page exchange data with a server without reloading the entire page."
+        },
+        {
+          "question": "What is HTML?",
+          "answer": "HTML gives a web page its structure."
+        }
+      ],
+      "seconds": 2.7,
+      "model": "Qwen3 0.6B · Q4_0",
+      "sdk": "0.19.1",
+      "tokensPerSecond": 59.75543830334764,
+      "transport": "Python TCP"
+    },
+    {
+      "requestedCards": 5,
+      "status": 200,
+      "cards": [
+        {
+          "question": "What is HTTP?",
+          "answer": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response."
+        },
+        {
+          "question": "What is HTML?",
+          "answer": "HTML gives a web page its structure."
+        },
+        {
+          "question": "What is CSS?",
+          "answer": "CSS controls its appearance."
+        },
+        {
+          "question": "What is JavaScript?",
+          "answer": "JavaScript adds interaction."
+        },
+        {
+          "question": "What is an API?",
+          "answer": "An API lets software systems communicate through defined requests and responses."
+        }
+      ],
+      "seconds": 3.2,
+      "model": "Qwen3 0.6B · Q4_0",
+      "sdk": "0.19.1",
+      "tokensPerSecond": 57.889158663088466,
+      "transport": "Python TCP"
+    }
+  ]
+}

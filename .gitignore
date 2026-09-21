@@ -3,3 +3,5 @@ node_modules/
 *.log
 .env
 .DS_Store
+.venv/
+__pycache__/
