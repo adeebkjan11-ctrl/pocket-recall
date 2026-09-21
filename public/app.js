@@ -1,7 +1,7 @@
 const $ = id => document.getElementById(id);
 const notes = $('notes');
 let token, result, working = false, ratings = [];
-const sample = 'HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API lets software systems communicate through defined requests and responses. AJAX lets a web page exchange data with a server without reloading the entire page.';
+const sample = 'HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API is an interface that lets software systems communicate through defined requests and responses. AJAX lets a web page exchange data with a server without reloading the entire page.';
 function error(message) { $('error').textContent = message; $('error').hidden = false; }
 function countChars() { $('counter').textContent = `${notes.value.length.toLocaleString()} / 2,200`; }
 function setWorking(value) {
