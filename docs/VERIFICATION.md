@@ -1,4 +1,6 @@
-# Verification and remaining submission steps
+# Verification from the initial publication
+
+This page preserves the first published browser run. See [the latest verification](VERIFICATION-CURRENT.md) for the later answer-grounding refinement, 3.1-second capture, fresh smoke output, and current submission status.
 
 Verified on 21 September 2026. Environment: Linux x64, Node.js 24.19.0, Python 3.12.14; QVAC JavaScript and Python SDKs both **0.19.1**. The app used Qwen3 0.6B Q4_0 with a 4,096-token context on CPU.
 

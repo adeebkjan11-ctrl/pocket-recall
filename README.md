@@ -2,11 +2,13 @@
 
 A small, original study app that turns a short passage of notes into recall cards using **QVAC on your laptop**. The browser talks only to a Node process on the same computer. That process calls the QVAC SDK; there is no cloud AI endpoint or API key.
 
-**Verified on 21 September 2026:** the Python backend generated three real QVAC cards through the browser in **2.7 seconds on CPU**. Answer reveal, review marks, Markdown export, and the mobile layout passed. This timing describes the development machine, not a performance promise for every laptop. The source is public under the MIT license. See [verification](docs/VERIFICATION.md) and [publication/authorship](docs/PUBLISHING.md).
+**Verified on 21 September 2026:** the latest Python-backend browser run generated three accurate cards in **3.1 seconds on CPU**. Answer reveal, recall marking, Markdown export, and desktop/mobile layout checks passed. The prompt now asks for answer sentences copied from the notes. These timings describe the test machine. See [latest verification](docs/VERIFICATION-CURRENT.md), [earlier verification](docs/VERIFICATION.md), and [publication/authorship](docs/PUBLISHING.md).
 
-![Pocket Recall displaying three QVAC-generated cards, a revealed answer, and Ready locally](docs/pocket-recall-screenshot.png)
+![Pocket Recall displaying three real QVAC-generated cards and Ready locally](docs/pocket-recall-working.png)
 
-[Download the genuine screenshot](docs/pocket-recall-screenshot.png) · [Browser verification receipt](docs/browser-verification.json) · [Cards exported from this run](docs/pocket-recall-cards.md)
+[Download the latest genuine screenshot](docs/pocket-recall-working.png) · [Latest browser receipt](docs/browser-inference-current.json) · [Cards exported from this run](docs/sample-cards.md)
+
+The [earlier screenshot and receipt](docs/VERIFICATION.md) remain available as part of the published history.
 
 ## Install
 
@@ -68,7 +70,7 @@ Open **http://127.0.0.1:8787** in a browser on the **same computer**. This is a 
 4. Try to recall the answer before expanding **Reveal answer**. Mark each card **Got it** or **Practice again**.
 5. Export the cards and review marks as Markdown. Refreshing the page clears the study session; notes are not saved automatically.
 
-The small model may produce unsupported answers or malformed output. The app rejects incomplete card sets instead of manufacturing a result. Check generated answers against the notes. CPU generation may take a minute or more; generation is cancelled after three minutes. The Stop button appears only while inference is active, not during model download.
+The prompt asks the model to copy answer sentences from the notes, reducing unsupported rewording. This is not a semantic accuracy guarantee. The small model may still produce unsupported answers or malformed output. The app rejects incomplete card sets instead of manufacturing a result. Check generated answers against the notes. CPU generation may take a minute or more; generation is cancelled after three minutes. The Stop button appears only while inference is active, not during model download.
 
 ## SDK and model
 
@@ -112,7 +114,7 @@ npm run smoke:python # Same study-card check through the Python SDK
 
 A successful smoke run prints `REAL_QVAC_INFERENCE` with three generated cards and exits 0. A failure prints the real SDK error and exits nonzero. `docs/python-inference-check.txt` records a successful real inference run; `docs/inference-check.txt` records the earlier JavaScript transport failure. The unit tests alone do **not** prove that inference works.
 
-The included screenshot was captured from Chromium running alongside the real Node/Python/QVAC processes at `127.0.0.1:8787`. The browser clicked **Try sample**, prepared the model, generated three cards, revealed an answer, and marked two cards. Its rendered questions and answers were checked against the actual HTTP response. No mock responses, injected fixture cards, cloud AI, or image generation were used.
+The latest screenshot was captured from Chromium running alongside the real Node/Python/QVAC processes on loopback. The browser clicked **Try sample** and **Make my study cards**, waited for real generation, revealed an answer, marked it remembered, and exported Markdown. All three answers in this run are exact excerpts of the notes. No mock responses, injected fixture cards, cloud AI, or image generation were used. The latest smoke run took 2.9 seconds; [the latest evidence](docs/VERIFICATION-CURRENT.md) records the input, output, and checks.
 
 To capture your own screenshot, follow those steps in the browser. For optional automated evidence, stop any existing Pocket Recall process, keep the Python virtual environment active, and run:
 
@@ -136,7 +138,7 @@ The helper launches `npm run start:python`, verifies the UI and export, and writ
 
 Public repository: [adeebkjan11-ctrl/pocket-recall](https://github.com/adeebkjan11-ctrl/pocket-recall). The repository was empty before publication; no existing remote work was removed and no force-push was used.
 
-The public commit history contains the four substantive implementation stages, an MIT-license initialization, and the final evidence/documentation update. GitHub associates the publication commits with **adeebkjan11-ctrl**; their messages explicitly credit **Codex** as a coauthor. This is an AI-assisted project.
+The public commit history contains the four substantive implementation stages, an MIT-license initialization, evidence/documentation updates, and the answer-grounding refinement. GitHub associates the publication commits with **adeebkjan11-ctrl**; their messages explicitly credit **Codex** as a coauthor. This is an AI-assisted project.
 
 The ZIP's **four original commits still have `Codex <codex@openai.com>` authorship** and their exact hashes are preserved in [pocket-recall-history.bundle](pocket-recall-history.bundle). The publication commits have new hashes; the original commits are archived in the bundle rather than ancestors of public `main`. See the [hash mapping and access details](docs/PUBLISHING.md).
 

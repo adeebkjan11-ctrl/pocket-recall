@@ -1,0 +1,27 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> pocket-recall-qvac@1.0.0 smoke:python
+> node scripts/smoke.js --python
+
+{
+  "test": "REAL_QVAC_INFERENCE",
+  "cards": [
+    {
+      "question": "What is an API?",
+      "answer": "An API is an interface that lets software systems communicate through defined requests and responses."
+    },
+    {
+      "question": "What is HTTP?",
+      "answer": "HTTP is a protocol used to request and deliver web resources."
+    },
+    {
+      "question": "What gives a web page its structure?",
+      "answer": "HTML gives a web page its structure."
+    }
+  ],
+  "seconds": 2.9,
+  "model": "Qwen3 0.6B · Q4_0",
+  "sdk": "0.19.1",
+  "tokensPerSecond": 53.4064408167625,
+  "transport": "Python TCP"
+}

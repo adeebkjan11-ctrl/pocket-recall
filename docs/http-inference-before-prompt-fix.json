@@ -1,0 +1,34 @@
+{
+  "test": "REAL_QVAC_HTTP_INFERENCE",
+  "source_notes": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API lets software systems communicate through defined requests and responses. AJAX lets a web page exchange data with a server without reloading the entire page.",
+  "result": {
+    "cards": [
+      {
+        "question": "What is an API?",
+        "answer": "An API is a protocol used to let software systems communicate through defined requests and responses."
+      },
+      {
+        "question": "What is AJAX?",
+        "answer": "AJAX lets a web page exchange data with a server without reloading the entire page."
+      },
+      {
+        "question": "What is HTML?",
+        "answer": "HTML gives a web page its structure."
+      }
+    ],
+    "seconds": 2.8,
+    "model": "Qwen3 0.6B \u00b7 Q4_0",
+    "sdk": "0.19.1",
+    "tokensPerSecond": 56.88291210739494,
+    "transport": "Python TCP"
+  },
+  "status": {
+    "phase": "ready",
+    "percentage": 100,
+    "model": "Qwen3 0.6B \u00b7 Q4_0",
+    "sdk": "0.19.1",
+    "generating": false,
+    "transport": "Python TCP",
+    "busy": false
+  }
+}

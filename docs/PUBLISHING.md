@@ -23,7 +23,7 @@ The authenticated GitHub plugin successfully published the source. Its commit op
 | `5b17a9c7bbbd2c585a1ccd31544acd2e6ae85633` | `35b7cde4c5ff826df4b69fcab711bc7840724686` | Documentation, validation, and HTTP tests |
 | `64fc08f69592f295416b491602b288e47a3576b7` | `572de76543bc3b7b5bf1314557c0dd8265f16964` | Official Python backend and real inference |
 
-The final restored source tree was byte-for-byte identical to the original fourth commit before adding new screenshot/evidence documentation. Public main has six publication commits: one MIT-license initialization, these four substantive stages, and the final evidence/documentation update. This exceeds the requested three-commit minimum.
+The final restored source tree was byte-for-byte identical to the original fourth commit before adding new screenshot/evidence documentation. At initial evidence commit `7e063f40308864c7619eef07d4650dd6ba142787`, public main contained six publication commits: one MIT-license initialization, these four substantive stages, and an evidence/documentation update. Later answer-grounding and verification updates add to that history. The requested three-commit minimum is exceeded; the original Codex authorship remains unchanged. See [latest verification](VERIFICATION-CURRENT.md).
 
 ## Original history remains recoverable
 
