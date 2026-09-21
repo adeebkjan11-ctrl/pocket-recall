@@ -2,20 +2,24 @@
 
 A small, original study app that turns a short passage of notes into recall cards using **QVAC on your laptop**. The browser talks only to a Node process on the same computer. That process calls the QVAC SDK; there is no cloud AI endpoint or API key.
 
-**Verification status:** real QVAC inference passes through the included Python SDK backend. The three-card smoke run took 2.5 seconds on CPU. Validation and local HTTP tests pass too. The JavaScript-only backend is included but could not be run in this environment because its Unix socket is blocked. Screenshot capture and public publication remain incomplete. See [verification](docs/VERIFICATION.md).
+**Verified on 21 September 2026:** the Python backend generated three real QVAC cards through the browser in **2.7 seconds on CPU**. Answer reveal, review marks, Markdown export, and the mobile layout passed. This timing describes the development machine, not a performance promise for every laptop. The source is public under the MIT license. See [verification](docs/VERIFICATION.md) and [publication/authorship](docs/PUBLISHING.md).
+
+![Pocket Recall displaying three QVAC-generated cards, a revealed answer, and Ready locally](docs/pocket-recall-screenshot.png)
+
+[Download the genuine screenshot](docs/pocket-recall-screenshot.png) · [Browser verification receipt](docs/browser-verification.json) · [Cards exported from this run](docs/pocket-recall-cards.md)
 
 ## Install
 
 Requires Node.js **22.17+**, npm **10.9+**, and a supported desktop OS. Use a normal laptop/desktop environment that permits local worker IPC. Aim for at least 4 GB RAM and 5 GB free disk for dependencies, model, and cache. See [QVAC system requirements](https://docs.qvac.tether.io/system-requirements/) for platform details; Windows needs the required Vulkan runtime even for CPU use.
 
-From the project folder:
+### Recommended: tested Python backend
+
+Clone the public repository, then install from its project folder:
 
 ```sh
-npm ci
-npm start
+git clone https://github.com/adeebkjan11-ctrl/pocket-recall.git
+cd pocket-recall
 ```
-
-### Tested Python transport
 
 The same app can use QVAC's official **Python 0.19.1 SDK**, which connects to the local worker over loopback TCP. This is the backend verified in the included real-inference evidence. It requires Python 3.10+ in addition to Node. It uses the same local model and UI:
 
@@ -28,9 +32,31 @@ python scripts/download-model.py
 npm run start:python
 ```
 
-On Windows PowerShell, replace the activation command with `.venv\Scripts\Activate.ps1`. If activation is unavailable, set `QVAC_PYTHON` to the virtual environment's Python executable. Do not weaken shell security policies just to activate an environment.
+On Windows PowerShell, you can run the same setup without activating the environment:
+
+```powershell
+npm ci
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe scripts/download-model.py
+$env:QVAC_PYTHON = (Resolve-Path .\.venv\Scripts\python.exe).Path
+npm run start:python
+```
+
+Alternatively activate with `.venv\Scripts\Activate.ps1` if your current shell policy permits it. Do not weaken shell policies just to activate an environment.
 
 `download-model.py` is an optional setup helper: it downloads the pinned model from HTTPS and verifies its SHA-256 before use. The SDK still loads and runs the model. Without this helper or `QVAC_MODEL_PATH`, the Python backend uses the SDK's normal first-run model download. The helper is useful when the model registry's peer-to-peer transport is unavailable. Both methods transfer model weights, not study notes.
+
+### Alternative: JavaScript backend
+
+The original JavaScript SDK adapter remains available:
+
+```sh
+npm ci
+npm start
+```
+
+It calls QVAC's actual `loadModel` and `completion` functions. Its worker requires Unix-socket IPC on Linux; that transport failed with `listen EPERM` in the earlier development session, so the published screenshot verifies the Python route. The Python API spells the model-loading function `load_model` and also calls the real `completion` function.
 
 Open **http://127.0.0.1:8787** in a browser on the **same computer**. This is a local app, not a website to deploy to a cloud server. A phone opening a server on someone else's computer would not count as on-device inference, so this version deliberately listens only on loopback.
 
@@ -46,7 +72,7 @@ The small model may produce unsupported answers or malformed output. The app rej
 
 ## SDK and model
 
-- Declared and installed dependency: **`@qvac/sdk` 0.19.1**, pinned in `package.json` and the lockfile.
+- Declared and installed dependency: **`@qvac/sdk` 0.19.1**, pinned in `package.json` and the lockfile; this satisfies **QVAC ≥0.19.0**.
 - `src/engine-node.js` imports and calls **`loadModel`** and **`completion`** from that SDK.
 - `requirements.txt` pins **`tetherto-qvac-sdk==0.19.1`**; `src/python-worker.py` calls its real **`load_model`** and **`completion`** functions. `src/engine.js` selects the requested backend.
 - It also calls `cancel` and `unloadModel` for lifecycle management.
@@ -86,7 +112,17 @@ npm run smoke:python # Same study-card check through the Python SDK
 
 A successful smoke run prints `REAL_QVAC_INFERENCE` with three generated cards and exits 0. A failure prints the real SDK error and exits nonzero. `docs/python-inference-check.txt` records a successful real inference run; `docs/inference-check.txt` records the earlier JavaScript transport failure. The unit tests alone do **not** prove that inference works.
 
-For genuine screenshot evidence: run the app on your laptop, use **Try sample**, generate cards, reveal one answer, and take a screenshot showing the cards and **Ready locally**. Do not present the empty-state UI or fixture data as an inference demonstration. A working-app screenshot has not been captured in this environment.
+The included screenshot was captured from Chromium running alongside the real Node/Python/QVAC processes at `127.0.0.1:8787`. The browser clicked **Try sample**, prepared the model, generated three cards, revealed an answer, and marked two cards. Its rendered questions and answers were checked against the actual HTTP response. No mock responses, injected fixture cards, cloud AI, or image generation were used.
+
+To capture your own screenshot, follow those steps in the browser. For optional automated evidence, stop any existing Pocket Recall process, keep the Python virtual environment active, and run:
+
+```sh
+npm install --no-save --package-lock=false playwright
+npx playwright install chromium
+node scripts/capture-evidence.mjs
+```
+
+The helper launches `npm run start:python`, verifies the UI and export, and writes evidence to `docs/`. Playwright is optional development tooling, not an application dependency. An existing Chromium executable can be selected with `CHROMIUM_EXECUTABLE`.
 
 ## Troubleshooting
 
@@ -96,20 +132,22 @@ For genuine screenshot evidence: run the app on your laptop, use **Try sample**,
 - **Invalid cards:** shorten the notes and try three cards. The app does not silently truncate or synthesize missing answers.
 - **Port in use:** use `PORT=8788 npm start` on macOS/Linux, or set `$env:PORT='8788'` in PowerShell before `npm start`.
 
-## Publishing status
+## Publication and authorship
 
-Intended repository: [adeebkjan11-ctrl/pocket-recall](https://github.com/adeebkjan11-ctrl/pocket-recall), supplied by the user. Its contents and visibility have not been verified, and no push was completed. At least three local commits preserve the implementation work. They use the development environment's **Codex** author identity, not a verified GitHub user identity.
+Public repository: [adeebkjan11-ctrl/pocket-recall](https://github.com/adeebkjan11-ctrl/pocket-recall). The repository was empty before publication; no existing remote work was removed and no force-push was used.
 
-The downloadable bundle includes `pocket-recall-history.bundle`. To recover the repository with its history:
+The public commit history contains the four substantive implementation stages, an MIT-license initialization, and the final evidence/documentation update. GitHub associates the publication commits with **adeebkjan11-ctrl**; their messages explicitly credit **Codex** as a coauthor. This is an AI-assisted project.
+
+The ZIP's **four original commits still have `Codex <codex@openai.com>` authorship** and their exact hashes are preserved in [pocket-recall-history.bundle](pocket-recall-history.bundle). The publication commits have new hashes; the original commits are archived in the bundle rather than ancestors of public `main`. See the [hash mapping and access details](docs/PUBLISHING.md).
+
+Restore the original development history separately:
 
 ```sh
-git clone pocket-recall-history.bundle pocket-recall-work
-cd pocket-recall-work
-git remote set-url origin https://github.com/adeebkjan11-ctrl/pocket-recall.git
-git fetch origin
+git clone pocket-recall-history.bundle pocket-recall-original
+git -C pocket-recall-original log --oneline
 ```
 
-Inspect existing remote branches before publishing. If the remote is empty, `git push -u origin main` publishes the commits. If it already has work, preserve it and merge or open a pull request; do not force-push. Confirm the account/author requirements with the challenge before submitting—do not misrepresent AI-assisted authorship.
+The source, working-app screenshot, SDK declaration, MIT license, and at-least-three-commit count are complete. The [X post draft](docs/X-POST-DRAFT.md) tags **@qvac** and is ready for the owner to post with the screenshot. **No X post has been sent, and no actual X post URL or final challenge submission exists from this work.**
 
 ## Structure
 
@@ -119,6 +157,7 @@ Inspect existing remote branches before publishing. If the remote is empty, `git
 - `src/server.js`: same-device HTTP interface.
 - `public/`: original responsive UI; no framework/build step.
 - `scripts/smoke.js`: real inference check.
+- `scripts/capture-evidence.mjs`: optional browser evidence capture using real QVAC.
 - `test/app.test.js`: validation and local HTTP security checks.
 - `docs/`: evidence, remaining steps, and an X draft.
 

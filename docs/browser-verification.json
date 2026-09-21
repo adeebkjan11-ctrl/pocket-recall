@@ -1,0 +1,48 @@
+{
+  "test": "REAL_QVAC_BROWSER_GENERATION",
+  "capturedAt": "2026-09-21T11:46:36.463Z",
+  "command": "npm run start:python",
+  "sourceNotes": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API lets software systems communicate through defined requests and responses. AJAX lets a web page exchange data with a server without reloading the entire page.",
+  "status": 200,
+  "cards": [
+    {
+      "question": "What is HTTP?",
+      "answer": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response."
+    },
+    {
+      "question": "What gives a web page its structure?",
+      "answer": "HTML gives a web page its structure."
+    },
+    {
+      "question": "What controls the appearance of a web page?",
+      "answer": "CSS controls its appearance."
+    }
+  ],
+  "seconds": 2.7,
+  "model": "Qwen3 0.6B · Q4_0",
+  "sdk": "0.19.1",
+  "tokensPerSecond": 54.650874840957414,
+  "transport": "Python TCP",
+  "browser": "153.0.8010.0",
+  "viewport": {
+    "width": 1440,
+    "height": 1120
+  },
+  "screenshot": "pocket-recall-screenshot.png",
+  "review": "1 remembered · 1 to practice · 1 to review",
+  "exportVerified": true,
+  "mobileLayout": {
+    "width": 390,
+    "contentWidth": 390
+  },
+  "pageErrors": [],
+  "browserRequests": [
+    "http://127.0.0.1:8787/",
+    "http://127.0.0.1:8787/style.css",
+    "http://127.0.0.1:8787/app.js",
+    "http://127.0.0.1:8787/api/status",
+    "http://127.0.0.1:8787/api/session",
+    "http://127.0.0.1:8787/api/prepare",
+    "http://127.0.0.1:8787/api/generate"
+  ]
+}

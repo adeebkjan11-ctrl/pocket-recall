@@ -1,0 +1,18 @@
+{
+  "docs/pocket-recall-screenshot.png": {
+    "bytes": 161485,
+    "sha256": "33bbf3b301b3548ad701b28d4bdefae29d83cf836dbd6002ad7400dca27232eb"
+  },
+  "docs/browser-verification.json": {
+    "bytes": 1744,
+    "sha256": "c26beb56a1b277221165e8e1530a6e24f72006a63471291dc86f8ed8277a716f"
+  },
+  "docs/pocket-recall-cards.md": {
+    "bytes": 445,
+    "sha256": "98da73f68274f587670c81a4f74fc3f46af7d76422a0fcf14ba8615acdbecefa"
+  },
+  "pocket-recall-history.bundle": {
+    "bytes": 53078,
+    "sha256": "7d894f63a38c86a86e3aa7545248bf3388a7c3d8a714aa273e53d6f59184f909"
+  }
+}

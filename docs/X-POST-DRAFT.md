@@ -1,7 +1,7 @@
-# X post draft — not published
+# X post draft — ready for the owner to post
 
-Use only after real inference has passed, the app screenshot has been captured, and the repository is public:
+I built Pocket Recall with Codex: study notes into flashcards using @qvac locally on your laptop. No cloud AI API or API key. Reveal answers, track recall, export Markdown. Open source (MIT): https://github.com/adeebkjan11-ctrl/pocket-recall
 
-I built Pocket Recall: turn study notes into practice cards with @qvac running locally on your laptop. No cloud AI API or API key. Reveal answers, track recall, and export cards. Open source (MIT): https://github.com/adeebkjan11-ctrl/pocket-recall
+Attach `docs/pocket-recall-screenshot.png`, the genuine screenshot from a real QVAC run. The source repository is public. This text is under 280 characters even before X shortens the URL.
 
-Attach the actual working-app screenshot. The repository URL was supplied by the user; publication has not yet been verified. No X post URL exists from this work.
+No X post was sent by Codex, and no actual post URL exists from this work. After posting, use the actual post URL for the challenge submission.

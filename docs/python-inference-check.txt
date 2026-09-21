@@ -8,7 +8,7 @@ npm warn Unknown env config "http-proxy". This will stop working in the next maj
   "cards": [
     {
       "question": "What is HTTP?",
-      "answer": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response."
+      "answer": "HTTP is a protocol used to request and deliver web resources. A browser sends a request and a server returns a response. HTML gives a web page its structure. CSS controls its appearance. JavaScript adds interaction. An API lets software systems communicate through defined requests and responses."
     },
     {
       "question": "What is HTML?",
@@ -19,9 +19,9 @@ npm warn Unknown env config "http-proxy". This will stop working in the next maj
       "answer": "CSS controls its appearance."
     }
   ],
-  "seconds": 2.5,
+  "seconds": 4,
   "model": "Qwen3 0.6B · Q4_0",
   "sdk": "0.19.1",
-  "tokensPerSecond": 63.21207463280669,
+  "tokensPerSecond": 34.599739237734475,
   "transport": "Python TCP"
 }
