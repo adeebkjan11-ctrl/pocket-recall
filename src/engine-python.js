@@ -25,7 +25,8 @@ function startWorker() {
   child.stderr.on('data',chunk => { diagnostic = (diagnostic+chunk.toString()).slice(-3000); });
   const fail = message => {
     if (child !== startedChild) return;
-    ready = false; child = undefined;
+    ready = false; active = false; child = undefined;
+    progress = {phase:'error',percentage:0};
     for (const {reject,timer} of pending.values()) {clearTimeout(timer); reject(new Error(message));}
     pending.clear();
   };
@@ -33,6 +34,7 @@ function startWorker() {
   child.on('exit',code => fail(code ? `Python worker exited (${code}): ${diagnostic}` : 'Python worker closed.'));
   child.stdin.on('error',() => {});
   createInterface({input:child.stdout}).on('line',line => {
+    if (child !== startedChild) return; // Ignore buffered frames from an exited worker.
     if (!line.startsWith('POCKET_JSON:')) return; // Native library diagnostics are not protocol frames.
     let event; try {event = JSON.parse(line.slice(12));} catch {return;}
     if (event.progress) {progress = {phase:'downloading',percentage:event.progress}; return;}
