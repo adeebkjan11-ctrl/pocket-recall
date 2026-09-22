@@ -1,10 +1,17 @@
 # X post draft — ready to copy, not posted
 
-I built Pocket Recall with Codex + @qvac: study notes → flashcards on your laptop using QVAC's completion(). No cloud AI API or API key. Reveal answers, track recall, export Markdown. MIT source: https://github.com/adeebkjan11-ctrl/pocket-recall
+Built **Pocket Recall** with @qvac: a local-first study app that turns your notes into flashcards on your own computer.
 
-## Two-line app description
+It uses QVAC's `load_model()` / `loadModel()` to load Qwen3 0.6B and `completion()` to generate the cards locally — no cloud AI API key.
 
-Pocket Recall turns study notes into flashcards with answer reveal, recall tracking, and Markdown export.
-It calls QVAC's `completion()` for local text generation; `loadModel()` in JavaScript or `load_model()` in Python loads the model.
+Recall → reveal → review → export Markdown.
 
-Attach `docs/pocket-recall-working.png`. The screenshot shows real QVAC generation through the Python backend. Publish the post yourself, then use its actual URL for submission. No X post has been published by Codex.
+Open source: https://github.com/adeebkjan11-ctrl/pocket-recall
+
+#QVAC #LocalAI #OpenSource
+
+## App bio
+
+Pocket Recall is a local-first study app that turns short notes into AI-generated flashcards with QVAC. Practice active recall, reveal answers, retry missed cards, and export Markdown while inference stays on your own computer.
+
+Attach `docs/pocket-recall-working.png`. The screenshot shows real QVAC generation through the Python backend.
