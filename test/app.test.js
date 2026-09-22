@@ -29,6 +29,12 @@ test('local HTTP boundary blocks hostile origins, missing tokens and invalid inp
   t.after(() => new Promise(resolve => {server.close(resolve); server.closeAllConnections();}));
   const base = `http://127.0.0.1:${server.address().port}`;
   assert.equal((await fetch(base)).status,200);
+  const crossSiteStatus = path => new Promise((resolve,reject) => {
+    const req = http.get(base+path,{headers:{'Sec-Fetch-Site':'cross-site'}},res => {res.resume(); resolve(res.statusCode);});
+    req.on('error',reject);
+  });
+  assert.equal(await crossSiteStatus('/'),200);
+  assert.equal(await crossSiteStatus('/api/status'),403);
   assert.equal((await fetch(base+'/api/session',{headers:{Origin:'https://evil.example'}})).status,403);
   const badHostStatus = await new Promise((resolve,reject) => {
     const req = http.get(base+'/api/session',{headers:{Host:'evil.example'}},res => {res.resume(); resolve(res.statusCode);});
