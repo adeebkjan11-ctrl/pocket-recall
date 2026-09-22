@@ -4,6 +4,10 @@ Paste in some study notes, make a few flashcards, and test what you remember.
 
 Pocket Recall runs Qwen3 0.6B on your computer through QVAC. No AI API key needed, and your notes aren't sent to a cloud AI service.
 
+## App bio
+
+**Pocket Recall is a local-first study app that turns short notes into AI-generated flashcards with QVAC.** Practice active recall, reveal answers, mark what you know, retry what you miss, and export your cards as Markdown — while inference stays on your own computer.
+
 ![Pocket Recall with generated flashcards](docs/pocket-recall-working.png)
 
 ## Run it
@@ -55,7 +59,22 @@ Refreshing the page clears the session, so export anything you want to keep. Che
 
 Both SDKs are pinned to **0.19.1**: `@qvac/sdk` in `package.json` and `tetherto-qvac-sdk` in `requirements.txt`. The model is **Qwen3 0.6B Q4_0**.
 
-The JavaScript adapter calls `loadModel()` and `completion()`. The Python adapter calls `load_model()` and `completion()`.
+### QVAC functions called by Pocket Recall
+
+The main QVAC inference call is **`completion()`**. Pocket Recall also calls QVAC's model lifecycle and cancellation functions.
+
+| QVAC function | Backend / file | How Pocket Recall uses it |
+| --- | --- | --- |
+| `loadModel()` | JavaScript · `src/engine-node.js` | Loads Qwen3 0.6B before generation. |
+| `completion()` | JavaScript · `src/engine-node.js` | Generates flashcard text locally from the study-note prompt. |
+| `cancel()` | JavaScript · `src/engine-node.js` | Stops an active generation or a timed-out request. |
+| `unloadModel()` | JavaScript · `src/engine-node.js` | Releases the loaded model during shutdown. |
+| `load_model()` | Python · `src/python-worker.py` | Loads the same local Qwen3 model through QVAC's Python SDK. |
+| `completion()` | Python · `src/python-worker.py` | Runs local text generation for each flashcard request. |
+| `cancel()` | Python · `src/python-worker.py` | Cancels active or timed-out generation. |
+| `unload_model()` | Python · `src/python-worker.py` | Unloads the model during shutdown. |
+
+With the tested `npm run start:python` path, the app loads the model with `load_model()` and calls `completion()` whenever you generate study cards. The JavaScript backend provides the equivalent `loadModel()` + `completion()` flow.
 
 Python is the tested backend used for the screenshot. You can also start the JavaScript backend with `npm start`; if it hits a socket-permission error, use the Python setup above.
 
