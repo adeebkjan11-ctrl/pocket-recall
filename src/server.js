@@ -18,8 +18,9 @@ export function createApp() {
     const json = (status, data) => { res.writeHead(status, {'Content-Type': 'application/json'}); res.end(JSON.stringify(data)); };
     const port = req.socket.localPort;
     if (![ `127.0.0.1:${port}`, `localhost:${port}` ].includes(req.headers.host)) return json(403, {error: 'Local requests only.'});
-    if (req.headers.origin && ![`http://127.0.0.1:${port}`, `http://localhost:${port}`].includes(req.headers.origin)) return json(403, {error: 'Origin not allowed.'});
-    if (req.headers['sec-fetch-site'] === 'cross-site') return json(403, {error: 'Cross-site requests are blocked.'});
+    const isApi = req.url?.startsWith('/api/');
+    if (isApi && req.headers.origin && ![`http://127.0.0.1:${port}`, `http://localhost:${port}`].includes(req.headers.origin)) return json(403, {error: 'Origin not allowed.'});
+    if (isApi && req.headers['sec-fetch-site'] === 'cross-site') return json(403, {error: 'Cross-site requests are blocked.'});
     try {
       if (req.method === 'GET' && req.url === '/api/session') return json(200, {token});
       if (req.method === 'GET' && req.url === '/api/status') return json(200, {...getStatus(), busy});
