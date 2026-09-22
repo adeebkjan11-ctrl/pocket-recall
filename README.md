@@ -3,11 +3,6 @@
 Paste in some study notes, make a few flashcards, and test what you remember.
 
 Pocket Recall runs Qwen3 0.6B on your computer through QVAC. No AI API key needed, and your notes aren't sent to a cloud AI service.
-
-## App bio
-
-**Pocket Recall is a local-first study app that turns short notes into AI-generated flashcards with QVAC.** Practice active recall, reveal answers, mark what you know, retry what you miss, and export your cards as Markdown — while inference stays on your own computer.
-
 ![Pocket Recall with generated flashcards](docs/pocket-recall-working.png)
 
 ## Run it
